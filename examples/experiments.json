@@ -26,6 +26,6 @@
     "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
     "unet_name": "wan2.1_t2v_14B_bf16.safetensors",
     "vae_name": "wan_2.1_vae.safetensors",
-    "lora_name": null,
+    "lora_name": null
   }
 ]
