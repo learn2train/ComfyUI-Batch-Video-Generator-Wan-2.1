@@ -159,6 +159,14 @@ def main():
         vaeloader = NODE_CLASS_MAPPINGS["VAELoader"]()
         loraloadermodelonly = NODE_CLASS_MAPPINGS["LoraLoaderModelOnly"]()
 
+        # --- Initialize Model Cache ---
+        loaded_clip_name = None
+        loaded_clip_model = None
+        loaded_unet_name = None
+        loaded_unet_model = None # Base UNet cache
+        loaded_vae_name = None
+        loaded_vae_model = None
+
         for i, config in enumerate(experiments):
             print(f"\n--- Starting Run {i+1}/{len(experiments)} ---")
             print(f"Config: {config}")
@@ -174,7 +182,7 @@ def main():
                 else:
                     seed = int(seed_value) # Ensure seed is an integer
 
-                filename_prefix = config["Video"]
+                filename_prefix = config.get('filename_prefix', 'Video')
                 cfg = config.get("cfg", 6.0)
                 steps = config.get("steps", 30)
                 latent_width = config.get("latent_width", 832)
@@ -192,35 +200,60 @@ def main():
                 print("!!! Skipping this run.")
                 continue
 
-            # --- Model Loading ---
+            # --- Model Loading (with Caching) ---
             try:
-                print(f"Loading CLIP: {clip_name}...")
-                cliploader_result = cliploader.load_clip(clip_name=clip_name, type="wan", device="default")
-                clip_model = get_value_at_index(cliploader_result, 0)
+                # Load CLIP (Cache Check)
+                if loaded_clip_name != clip_name or loaded_clip_model is None:
+                    print(f"Loading CLIP: {clip_name}...")
+                    cliploader_result = cliploader.load_clip(clip_name=clip_name, type="wan", device="default")
+                    loaded_clip_model = get_value_at_index(cliploader_result, 0)
+                    loaded_clip_name = clip_name
+                    # Optional: Clear previous model from memory if needed
+                    # del cliploader_result
+                else:
+                    print(f"Reusing cached CLIP: {loaded_clip_name}")
+                clip_model = loaded_clip_model # Use the cached or newly loaded model
 
-                print(f"Loading UNet: {unet_name}...")
-                unetloader_result = unetloader.load_unet(unet_name=unet_name, weight_dtype="default")
-                unet_model = get_value_at_index(unetloader_result, 0)
+                # Load UNet (Cache Check) - Base UNet
+                if loaded_unet_name != unet_name or loaded_unet_model is None:
+                    print(f"Loading UNet: {unet_name}...")
+                    unetloader_result = unetloader.load_unet(unet_name=unet_name, weight_dtype="default")
+                    loaded_unet_model = get_value_at_index(unetloader_result, 0)
+                    loaded_unet_name = unet_name
+                    # del unetloader_result
+                else:
+                    print(f"Reusing cached UNet: {loaded_unet_name}")
+                # NOTE: We use loaded_unet_model as the base for LoRA application below
 
-                print(f"Loading VAE: {vae_name}...")
-                vaeloader_result = vaeloader.load_vae(vae_name=vae_name)
-                vae_model = get_value_at_index(vaeloader_result, 0)
+                # Load VAE (Cache Check)
+                if loaded_vae_name != vae_name or loaded_vae_model is None:
+                    print(f"Loading VAE: {vae_name}...")
+                    vaeloader_result = vaeloader.load_vae(vae_name=vae_name)
+                    loaded_vae_model = get_value_at_index(vaeloader_result, 0)
+                    loaded_vae_name = vae_name
+                    # del vaeloader_result
+                else:
+                    print(f"Reusing cached VAE: {loaded_vae_name}")
+                vae_model = loaded_vae_model # Use the cached or newly loaded model
 
-                # Apply LoRA (if specified)
+                # Apply LoRA (if specified) - Always applied to the current base UNet (cached or new)
                 if lora_name:
-                    print(f"Loading LoRA: {lora_name}")
+                    # TODO: Add strength_model to config? Currently hardcoded to 1
+                    lora_strength_model = config.get("lora_strength", 1.0)
+                    print(f"Applying LoRA: {lora_name} (Strength: {lora_strength_model}) to UNet: {loaded_unet_name}")
                     loraloadermodelonly_result = loraloadermodelonly.load_lora_model_only(
                         lora_name=lora_name,
-                        strength_model=1,
-                        model=unet_model # Apply LoRA to the loaded UNet
+                        strength_model=lora_strength_model,
+                        model=loaded_unet_model # Apply LoRA to the potentially cached base UNet
                     )
                     model_for_sampling = get_value_at_index(loraloadermodelonly_result, 0)
+                    # del loraloadermodelonly_result # Clean up intermediate result
                 else:
                     print("No LoRA specified for this run.")
-                    model_for_sampling = unet_model # Use the base UNet
+                    model_for_sampling = loaded_unet_model # Use the base UNet directly
 
             except Exception as e:
-                print(f"!!! ERROR loading models for run {i+1}: {e}")
+                print(f"!!! ERROR loading/applying models for run {i+1}: {e}")
                 print("!!! Skipping this run.")
                 continue # Skip to the next experiment
 
