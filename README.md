@@ -1,8 +1,8 @@
-# ComfyUI Batch Video Generator
+# ComfyUI Batch Video Generator (for Wan 2.1)
 
-This repository contains a Python script (`wan_video_generator.py`) designed to run batch video generation tasks using ComfyUI, based on configurations defined in an external JSON file (`experiments.json`). It allows for programmatic experimentation and queuing of multiple video generations without manual intervention for each run.
+This repository contains a Python script (`wan_video_generator.py`) specifically adapted to run batch video generation tasks using the **Wan 2.1 model** within ComfyUI. It utilizes configurations defined in an external JSON file (`experiments.json`) to allow for programmatic experimentation and queuing of multiple video generations without manual intervention.
 
-This script was originally generated using the [ComfyUI-to-Python-Extension](https://github.com/pydn/ComfyUI-to-Python-Extension) by Peyton DeNiro and subsequently modified to support batch processing from a configuration file and model caching.
+This script was originally generated from a Wan 2.1 workflow using the [ComfyUI-to-Python-Extension](https://github.com/pydn/ComfyUI-to-Python-Extension) by Peyton DeNiro and subsequently modified to support batch processing from a configuration file and model caching.
 
 ## Benefits
 
