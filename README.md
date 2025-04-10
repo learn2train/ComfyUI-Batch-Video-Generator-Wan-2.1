@@ -73,7 +73,7 @@ This script was originally generated from a Wan 2.1 workflow using the [ComfyUI-
 This file should contain a JSON list (`[...]`) where each element is an object (`{...}`) defining one experiment. Key parameters include:
 
 *   `prompt` (string): The positive text prompt.
-*   `negative_prompt` (string, optional): The negative text prompt. Defaults to a standard one if omitted.
+*   `negative_prompt` (string, optional): The negative text prompt. Defaults to Wan 2.1 recommended one.
 *   `seed` (integer, optional): The random seed. If omitted or `null`, a random seed will be generated.
 *   `filename_prefix` (string): Base name for the output video file (saved in ComfyUI's default output directory).
 *   `cfg` (float): CFG scale (e.g., `7.0`).
