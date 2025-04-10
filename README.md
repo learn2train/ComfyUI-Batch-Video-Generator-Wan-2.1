@@ -25,7 +25,7 @@ This script was originally generated from a Wan 2.1 workflow using the [ComfyUI-
     git clone https://github.com/learn2train/comfyui-workflows.git
     ```
 
-2.  **Download Base Models:** Download the required Wan 2.1 models (Text Encoder, VAE, Diffusion Model) into your workspace.
+2.  **Download Base Models:** Download the required Wan 2.1 models (Text Encoder, VAE, Diffusion Model) into your workspace. Note that we use the 14B text to video version here, but you can adapt the following to use the 1.3B parameters version instead.
     ```bash
     cd /workspace/
     # Text Encoder
