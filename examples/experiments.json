@@ -2,7 +2,7 @@
   {
     "prompt": "Monica Vitti looking at the mirror, cinematic lighting",
     "seed": 666,
-    "filename_prefix": "monica_vitti_mirror_run1",
+    "filename_prefix": "monica_vitti_epoch10",
     "cfg": 6.0,
     "steps": 30,
     "latent_width": 1280,
@@ -17,7 +17,7 @@
   {
     "prompt": "Monica Vitti in a futuristic cityscape at sunset, flying vehicles",
     "seed": 666,
-    "filename_prefix": "future_city_sunset_run2",
+    "filename_prefix": "monica_vitti_epoch20",
     "cfg": 6.0,
     "steps": 30,
     "latent_width": 832,
@@ -26,6 +26,6 @@
     "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
     "unet_name": "wan2.1_t2v_14B_bf16.safetensors",
     "vae_name": "wan_2.1_vae.safetensors",
-    "lora_name": null
+    "lora_name": "epoch20.safetensors"
   }
 ]
