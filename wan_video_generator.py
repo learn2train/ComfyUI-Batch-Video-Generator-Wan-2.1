@@ -304,18 +304,6 @@ def main():
                 print(f"!!! ERROR during generation for run {i+1}: {e}")
                 print("!!! Continuing to next run if possible.")
 
-            # --- Cleanup (Optional but recommended for long runs) ---
-            # Consider uncommenting if memory becomes an issue
-            # try:
-            #     del clip_model, unet_model, vae_model, model_for_sampling
-            #     del cliploader_result, unetloader_result, vaeloader_result
-            #     if lora_name: del loraloadermodelonly_result
-            #     del positive_cond, negative_cond, latent_image, ksampler_result, vaedecode_result
-            #     if torch.cuda.is_available():
-            #         torch.cuda.empty_cache()
-            # except NameError: # Handle cases where variables might not be defined due to errors
-            #     pass
-
         print("\n=== All experiments finished ===")
 
 
