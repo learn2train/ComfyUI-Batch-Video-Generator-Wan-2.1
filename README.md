@@ -4,6 +4,14 @@ This repository contains a Python script (`wan_video_generator.py`) designed to 
 
 This script was originally generated using the [ComfyUI-to-Python-Extension](https://github.com/pydn/ComfyUI-to-Python-Extension) by Peyton DeNiro and subsequently modified to support batch processing from a configuration file and model caching.
 
+## Benefits
+
+*   **Batch Processing:** Run hundreds or thousands of video generation experiments defined in a simple JSON file (`experiments.json`).
+*   **Automation:** Avoids the need to manually queue each generation in the ComfyUI interface.
+*   **Parameter Sweeping:** Easily test variations in prompts, seeds, CFG, steps, models, LoRAs, and other parameters systematically.
+*   **Efficiency:** Includes model caching to avoid reloading the same models (CLIP, UNet, VAE) for consecutive runs, saving time and potentially improving stability.
+*   **Reproducibility:** Keep a record of your experiments and their configurations in the `experiments.json` file.
+
 ## Prerequisites
 
 *   **ComfyUI:** You must have a working installation of ComfyUI. This script is designed to be run from within the root directory of your ComfyUI installation.
