@@ -22,7 +22,7 @@ This script was originally generated from a Wan 2.1 workflow using the [ComfyUI-
     ```bash
     # Navigate to your desired workspace directory
     cd /workspace/
-    git clone https://github.com/learn2train/comfyui-workflows.git
+    git clone https://github.com/learn2train/ComfyUI-Batch-Video-Generator-Wan-2.1.git
     ```
 
 2.  **Download Base Models:** Download the required Wan 2.1 models (Text Encoder, VAE, Diffusion Model) into your workspace. Note that we use the 14B text to video version here, but you can adapt the following to use the 1.3B parameters version instead.
@@ -63,7 +63,7 @@ This script was originally generated from a Wan 2.1 workflow using the [ComfyUI-
 
 6.  **Place Script and Config:** Copy the generator script and your experiments configuration file into the root of your ComfyUI installation.
     ```bash
-    cp /workspace/comfyui-workflows/wan_video_generator.py $COMFYUI_PATH/
+    cp /workspace/ComfyUI-Batch-Video-Generator-Wan-2.1/wan_video_generator.py $COMFYUI_PATH/
     cp /workspace/experiments.json $COMFYUI_PATH/
     ```
     *(Note: Ensure the `experiments.json` path inside `wan_video_generator.py` matches its location*
