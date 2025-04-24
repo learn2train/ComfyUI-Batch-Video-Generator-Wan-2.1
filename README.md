@@ -14,7 +14,7 @@ This script was originally generated from a Wan 2.1 workflow using the [ComfyUI-
 
 ## Prerequisites
 
-*   **ComfyUI:** You must have a working installation of ComfyUI. This script is designed to be run from within the root directory of your ComfyUI installation.
+*   **ComfyUI:** You must have a working and up-to-date installation of ComfyUI. This script is designed to be run from within the root directory of your ComfyUI installation. You don't have to run it separately. The ComfyUI Batch Video Generator will launch it on its own.
 
 ## Setup
 
